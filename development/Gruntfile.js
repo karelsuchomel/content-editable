@@ -11,15 +11,15 @@ module.exports = function(grunt) {
         tasks: ['sass:specific'],
       },
       watchMainJS: {
-        files: ['js-dev/*.js', '!js-dev/tpl-specific/**/*.js'],
+        files: ['js/*.js', '!js/tpl-specific/**/*.js'],
         tasks: ['concat:concat_JS'],
       },
       watchOtherJS: {
-        files: ['js-dev/tpl-specific/**/*.js'],
+        files: ['js/tpl-specific/**/*.js'],
         tasks: ['concat:concat_COPY'],
       },
       watchCSS: {
-        files: ['../style.css'],
+        files: ['../assets/css/main.css'],
         tasks: ['postcss', 'concat:concat_CSS'],
         options: {
           debounceDelay: 5000,
@@ -53,13 +53,13 @@ module.exports = function(grunt) {
     concat: {
       concat_JS: {
         files: {
-          '../assets/js/main.js': ['js-dev/*.js'],
+          '../assets/js/main.js': ['js/*.js'],
         },
       },
       concat_COPY: {
         files: [{
           expand: true,
-          cwd: 'js-dev/tpl-specific/', // Parent directory
+          cwd: 'js/tpl-specific/', // Parent directory
           src: '*.js',
           ext: '.js',
           dest: '../assets/js/',
@@ -70,7 +70,7 @@ module.exports = function(grunt) {
           separator: '\n\n',
         },
         files: {
-          '../style.css': ['sass/style-header.css', '../style.css'],
+          '../assets/css/main.css': ['sass/comment-header.css', '../assets/css/main.css'],
         },
       },
     },
@@ -78,23 +78,24 @@ module.exports = function(grunt) {
       options: {
         map: false,
         processors: [
-          require('autoprefixer')({browsers: ['last 20 versions']})
+          require('autoprefixer')({browsers: ['last 20 versions']}),
+          //require('cssnano')() // minify the result
         ]
       },
       dist: {
-        src: '../assets/css/**/*.css'
+        src: '../assets/css/*.css'
       }
     },
     'ftp-deploy' : {
       build: {
         auth: {
-          host: 'ftp.simpledot.cz',
+          host: 'ftp.hostname.cz',
           port: 21,
           authKey: 'key1'
         },
-        src: 'build/',
-        dest: '/mojeodpadky/',
-        exclusions: ['/.sass-cache/**/*']
+        src: ['./'],
+        dest: './',
+        exclusions: ['development/**/*', '.gitignore']
       }
     }
   });

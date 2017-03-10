@@ -1,8 +1,24 @@
-@import "var_settings"
-
 // EXPLANATION: this class make an element with floating siblings
 // count their height without need of any other element.
 .clear-both:after
-  content: ""
-  display: table
-  clear: both
+	content: ""
+	display: table
+	clear: both
+
+p
+	font-family: 'Open Sans', sans-serif
+
+button
+	padding: 14px 16px
+	border: 3px solid #34495e
+	border-radius: 5px
+	background: transparent
+	color: #34495e
+	cursor: pointer
+	transition: 0.2s
+
+	&:hover, &:active
+		background: #34495e
+		color: white
+		outline: 0px
+
